@@ -83,7 +83,9 @@ function demoFinder(dir, webpack_config) {
 
   // Find all the dirs below 'dir'.
   const isDir = filename => lstatSync(filename).isDirectory()
-  const dirs = readdirSync(dir).map(name => join(dir, name)).filter(isDir);
+  const moduleDir = path.resolve(dir, 'modules');
+  const dirs = readdirSync(moduleDir).map(name => join(moduleDir, name)).filter(isDir);
+  console.log(dirs);
 
   dirs.forEach(d => {
     // Look for both a *-demo.js and *-demo.html file in the directory.
@@ -132,11 +134,8 @@ module.exports.commonBuilder = function(dirname) {
       filename: '[name]-bundle.js?[chunkhash]',
       publicPath: '/',
     },
-    resolveLoader: {
-      // This config file references loaders, make sure users of this common
-      // config can find those loaders by including the local node_modules
-      // directory.
-      modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+    devServer: {
+      contentBase: path.join(__dirname, 'dist')
     },
     module: {
       rules: [
