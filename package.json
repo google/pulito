@@ -1,6 +1,6 @@
 {
   "name": "pulito",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Conventions and structure for a Vanilla JS application with a supporting webpack config.",
   "main": "webpack.common.js",
   "license": "BSD",
