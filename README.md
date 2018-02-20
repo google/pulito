@@ -50,6 +50,30 @@ Similary, pages of the webapp are expected to sit under the `/pages`
 directory, and consist of both a JS and HTML file. These will be processed and
 their output will also appear in the `dist` directory.
 
+Element Structure
+-----------------
+
+Each element has its own directory.
+
+<dl>
+   <dt>index.js</dt>
+   <dd>This file imports (via ES6 module imports) all the JS and CSS that define the element.</dd>
+   <dt>???.js</dt>
+   <dd>This file contains all the JS for the custom element.</dd>
+   <dt>???.css</dt>
+   <dd>
+     This file contains all the CSS for the custom element.
+     Note that this can also be an SCSS file with a .scss extension.
+   </dd>
+   <dt>???-demo.js</dt>
+   <dd>This file contains any JS that will run on the demo page.</dd>
+   <dt>???-demo.html</dt>
+   <dd>This file is the HTML for the demo page.</dd>
+</dl>
+
+You do not need to have a demo for each element. If you don't have
+a demo, just omit the `-demo.js` and `-demo.html` files.
+
 Usage
 -----
 
