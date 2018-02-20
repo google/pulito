@@ -55,21 +55,11 @@ Element Structure
 
 Each element has its own directory.
 
-<dl>
-   <dt>index.js</dt>
-   <dd>This file imports (via ES6 module imports) all the JS and CSS that define the element.</dd>
-   <dt>???.js</dt>
-   <dd>This file contains all the JS for the custom element.</dd>
-   <dt>???.css</dt>
-   <dd>
-     This file contains all the CSS for the custom element.
-     Note that this can also be an SCSS file with a .scss extension.
-   </dd>
-   <dt>???-demo.js</dt>
-   <dd>This file contains any JS that will run on the demo page.</dd>
-   <dt>???-demo.html</dt>
-   <dd>This file is the HTML for the demo page.</dd>
-</dl>
+* *index.js* - This file imports (via ES6 module imports) all the JS and CSS that define the element.
+* *???.js* - This file contains all the JS for the custom element.
+* *???.css* - This file contains all the CSS for the custom element. Note that this can also be an SCSS file with a .scss extension.
+* *???-demo.js* -This file contains any JS that will run on the demo page.
+* *???-demo.html* - This file is the HTML for the demo page.
 
 You do not need to have a demo for each element. If you don't have
 a demo, just omit the `-demo.js` and `-demo.html` files.
