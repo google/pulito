@@ -31,11 +31,12 @@ their output will also appear in the `dist` directory.
 
 The `webpack.config.js` for such a project can be very simple, just run:
 
+    $ yarn init
     $ yarn add pulito
 
 Then create a `webpack.config.js` file that looks like:
 
-    const { commonBuilder } = require('../webpack.common.js');
+    const { commonBuilder } = require('pulito');
     module.exports = commonBuilder(__dirname);
 
 At this point there's a lot of functionality present.
