@@ -41,8 +41,9 @@
 //     release:
 //      	NODE_ENV=production npx webpack
 //
+const { glob } = require('glob');
 const path = require('path');
-const { lstatSync, readdirSync } = require('fs')
+const fs = require('fs')
 const { basename, join, resolve } = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -82,14 +83,13 @@ function demoFinder(dir, webpack_config) {
   // entry points and Html plugins to the config.
 
   // Find all the dirs below 'dir'.
-  const isDir = filename => lstatSync(filename).isDirectory()
+  const isDir = filename => fs.lstatSync(filename).isDirectory()
   const moduleDir = path.resolve(dir, 'modules');
-  const dirs = readdirSync(moduleDir).map(name => join(moduleDir, name)).filter(isDir);
-  console.log(dirs);
+  const dirs = fs.readdirSync(moduleDir).map(name => join(moduleDir, name)).filter(isDir);
 
   dirs.forEach(d => {
     // Look for both a *-demo.js and *-demo.html file in the directory.
-    const files = readdirSync(d);
+    const files = fs.readdirSync(d);
     let demoHTML = '';
     let demoJS = '';
     files.forEach(file => {
@@ -119,6 +119,45 @@ function demoFinder(dir, webpack_config) {
     } else if (!!demoJS || !!demoHTML) {
       console.log("WARNING: An element needs both a *-demo.js and a *-demo.html file.");
     }
+  });
+
+  return webpack_config
+}
+
+
+function pageFinder(dir, webpack_config) {
+  // Look at all sub-directories of dir and if a directory contains
+  // both a -demo.html and -demo.js file then add the corresponding
+  // entry points and Html plugins to the config.
+
+  // Find all the dirs below 'dir'.
+  const pagesDir = path.resolve(dir, 'pages');
+  // Look for all *.js files, for each one look for a matching .html file.
+  // Emit into config.
+  //
+  const pagesJS = glob.sync(pagesDir + '/*.js');
+  console.log(pagesJS);
+
+  pagesJS.forEach(pageJS => {
+    // Look for both a <filename>.js and <filename>.html file in the directory.
+    // Strip off ".js" from end and replace with ".html".
+    let pageHTML = pageJS.replace(/\.js$/, '.html');
+    console.log(pageJS, pageHTML);
+    if (!fs.existsSync(pageHTML)) {
+      console.log("WARNING: A page needs both a *.js and a *.html file.");
+      return
+    }
+
+    let baseHTML = basename(pageHTML);
+    let name = basename(pageJS, '.js');
+    webpack_config.entry[name] = pageJS;
+    webpack_config.plugins.push(
+      new HtmlWebpackPlugin({
+        filename: baseHTML,
+        template: pageHTML,
+        chunks: [name],
+      }),
+    );
   });
 
   return webpack_config
@@ -193,6 +232,7 @@ module.exports.commonBuilder = function(dirname) {
       // need to make sure they installed them in their project via yarn.
     ],
   };
+  common = pageFinder(dirname, common);
   if (process.env.NODE_ENV == 'production') {
     common.plugins.push(
       new MinifyPlugin({}, {
