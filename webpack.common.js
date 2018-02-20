@@ -51,7 +51,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 
-/* A function that will look at all subdirectories of 'dir',
+/* A function that will look at all subdirectories of 'dir'/modules
+ * and adds all demo pages it finds for custom elements it finds there.
  *
  * Presumes that each element will have a file structure of:
  *
@@ -76,7 +77,7 @@ const MinifyPlugin = require("babel-minify-webpack-plugin");
  *        }),
  *      );
  *
- * */
+ */
 function demoFinder(dir, webpack_config) {
   // Look at all sub-directories of dir and if a directory contains
   // both a -demo.html and -demo.js file then add the corresponding
@@ -125,6 +126,31 @@ function demoFinder(dir, webpack_config) {
 }
 
 
+/* A function that will look at all subdirectories of 'dir'/pages
+ * and adds entries for each page it finds there.
+ *
+ * Presumes that each page will have both a JS and an HTML file.
+ *
+ *    pages/
+ *      index.js
+ *      index.html
+ *      search.js
+ *      search.html
+ *      ....
+ *
+ * The function will find those files and do the equivalent
+ * of the following to the webpack_config:
+ *
+ *      webpack_config.entry.['index'] = './pages/index/js';
+ *      webpack_config.plugins.push(
+ *        new HtmlWebpackPlugin({
+ *          filename: 'index.html',
+ *          template: './pages/index.html',
+ *          chunks: ['index'],
+ *        }),
+ *      );
+ *
+ */
 function pageFinder(dir, webpack_config) {
   // Look at all sub-directories of dir and if a directory contains
   // both a -demo.html and -demo.js file then add the corresponding
