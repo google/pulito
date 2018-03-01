@@ -1,6 +1,6 @@
 {
   "name": "pulito",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Conventions and structure for a Vanilla JS application with a supporting webpack config.",
   "main": "webpack.common.js",
   "license": "Apache-2.0",
@@ -8,8 +8,8 @@
   "bugs": {
     "url": "https://github.com/google/pulito/issues"
   },
-  "repository" : {
-    "type" : "git",
+  "repository": {
+    "type": "git",
     "url": "https://github.com/google/pulito.git"
   },
   "dependencies": {
