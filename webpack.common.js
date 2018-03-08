@@ -1,3 +1,18 @@
+// Copyright 2018 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
 // The commonBuilder function generates a common configuration for webpack.
 // You can require() it at the start of your webpack.config.js and then make
 // modifications to it from there. Users should at a minimum fill in the entry
@@ -162,13 +177,11 @@ function pageFinder(dir, webpack_config) {
   // Emit into config.
   //
   const pagesJS = glob.sync(pagesDir + '/*.js');
-  console.log(pagesJS);
 
   pagesJS.forEach(pageJS => {
     // Look for both a <filename>.js and <filename>.html file in the directory.
     // Strip off ".js" from end and replace with ".html".
     let pageHTML = pageJS.replace(/\.js$/, '.html');
-    console.log(pageJS, pageHTML);
     if (!fs.existsSync(pageHTML)) {
       console.log("WARNING: A page needs both a *.js and a *.html file.");
       return
