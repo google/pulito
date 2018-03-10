@@ -210,7 +210,6 @@ module.exports.commonBuilder = function(dirname) {
     output: {
       path: path.resolve(dirname, 'dist'),
       filename: '[name]-bundle.js?[chunkhash]',
-      publicPath: '/',
     },
     devServer: {
       contentBase: path.join(__dirname, 'dist')
