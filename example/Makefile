@@ -1,5 +1,5 @@
 build:
-	npx webpack
+	npx webpack --mode=development
 
 serve:
 	npx webpack-dev-server --watch
@@ -8,4 +8,4 @@ watch:
 	npx webpack --watch
 
 release:
-	NODE_ENV=production npx webpack
+	npx webpack --mode=production

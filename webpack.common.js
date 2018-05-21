@@ -44,17 +44,14 @@
 //
 // You do not need to add any of the plugins or loaders used here to your
 // local package.json, on the other hand, if you add new loaders or plugins
-// in your local project then you should 'yarn add' them to your local
+// in your local project then you should 'npm add' them to your local
 // package.json.
-//
-// This config understands NODE_ENV and can build production versions
-// of assets by setting the environment variable. An example Makefile:
 //
 //     build:
 //      	npx webpack
 //
 //     release:
-//      	NODE_ENV=production npx webpack
+//      	npx webpack --mode=production
 //
 const { glob } = require('glob');
 const path = require('path');
@@ -258,7 +255,7 @@ module.exports.commonBuilder = function(dirname) {
     },
     plugins: [
       new ExtractTextPlugin({
-        filename: '[name]-bundle.css?[contenthash]',
+        filename: '[name]-bundle.css?[hash]',
       }),
       new CleanWebpackPlugin(
         ['dist'],
@@ -267,7 +264,7 @@ module.exports.commonBuilder = function(dirname) {
         }
       ),
       // Users of pulito can append any plugins they want, but they
-      // need to make sure they installed them in their project via yarn.
+      // need to make sure they installed them in their project via npm.
     ],
   };
   common = pageFinder(dirname, common);

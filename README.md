@@ -35,8 +35,8 @@ Skeleton
 If you are starting a fresh project, pulito contains a project skeleton
 to get you going.
 
-    $ yarn init
-    $ yarn add pulito
+    $ npm init
+    $ npm add pulito
     $ unzip node_modules/pulito/skeleton.zip
 
 You will be prompted to overwrite `package.json`, select 'yes'.
@@ -78,7 +78,7 @@ Usage
 
 The `webpack.config.js` for such a project can be very simple, just run:
 
-    $ yarn add pulito
+    $ npm add pulito
 
 Then create a `webpack.config.js` file that looks like:
 
