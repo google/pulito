@@ -16,6 +16,7 @@ update-patch:
 zip:
 	-rm -rf ./example/dist
 	-rm -rf ./example/node_modules
+	-rm ./example/package-lock.json
 	-rm skeleton.zip
 	cd example; zip -r ../skeleton.zip .
 

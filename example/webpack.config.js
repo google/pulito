@@ -1,2 +1,2 @@
-const { commonBuilder } = require('../webpack.common.js');
+const { commonBuilder } = require('pulito');
 module.exports = commonBuilder(__dirname);

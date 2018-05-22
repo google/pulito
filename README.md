@@ -2,6 +2,10 @@
 
 Conventions and structure for a Vanilla JS application with a supporting webpack config.
 
+See [A la carte Web Development](https://bitworking.org/news/2018/03/a-la-carte-web-development)
+for more background on pulito and how it fits into "A la carte" web
+development.
+
 Pulito expects a project to be laid out in the following format:
 
     /modules
