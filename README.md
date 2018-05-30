@@ -123,12 +123,13 @@ Public Path
 -----------
 
 Sometimes, an app wants to specify that the js/css files are in an absolute path
-(e.g. `/js/`, `/static/`). Pulito supports this with an optional argument called
-[publicPath](https://webpack.js.org/guides/public-path/). publicPath is passed directly
-to WebPack.
+(e.g. `/js/`, `/static/`). Webpack supports this with [publicPath](https://webpack.js.org/guides/public-path/).
+Since Pulito just returns a Webpack object, the output of `commonBuilder` can be
+modified directly, like:
 
     const { commonBuilder } = require('pulito');
-    module.exports = commonBuilder(__dirname, '/static/');
+    module.exports = commonBuilder(__dirname);
+    module.exports.output.publicPath='/static/'
 
 After re-creating the files (e.g. `make release`), the js and css will be linked in like
 

@@ -6,7 +6,7 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "pulito": "^3.1",
+    "pulito": "^3",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4"
