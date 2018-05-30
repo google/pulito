@@ -23,7 +23,3 @@ example-element[active] {
     rotate(360deg);
   }
 }
-
-::placeholder {
-  color: gray;
-}

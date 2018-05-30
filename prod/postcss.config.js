@@ -1,4 +1,4 @@
-// postcss config used in all webpack.common.js configs.
+// postcss config used in all production webpack.common.js configs.
 module.exports = {
   plugins: {
     'autoprefixer': {},
