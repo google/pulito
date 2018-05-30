@@ -199,13 +199,14 @@ function pageFinder(dir, webpack_config) {
   return webpack_config
 }
 
-module.exports.commonBuilder = function(dirname) {
+module.exports.commonBuilder = function(dirname, publicPath="") {
   let common = {
     entry: {
       // Users of webpack.common must fill in the entry point(s).
     },
     output: {
       path: path.resolve(dirname, 'dist'),
+      publicPath: publicPath, // See https://webpack.js.org/guides/public-path/
       filename: '[name]-bundle.js?[chunkhash]',
     },
     devServer: {
