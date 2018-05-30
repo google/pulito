@@ -48,7 +48,11 @@ You will be prompted to overwrite `package.json`, select 'yes'.
     $ make serve
 
 At this point you should be able to visit the running skeleton
-app at `http://localhost:8080`.
+app at `http://localhost:8080/index.html`. This page is a built
+version of `pages/index.html` which has an `<example-element>` on it - a simple spinner.
+
+You can visit the demo page directly for the spinner by navigating to
+`http://localhost:8080/example-element.html`.
 
 Directory Structure
 -------------------
@@ -62,6 +66,8 @@ into the `dist` directory.
 Similary, pages of the webapp are expected to sit under the `/pages`
 directory, and consist of both a JS and HTML file. These will be processed and
 their output will also appear in the `dist` directory.
+
+See also, section **Public Path**.
 
 Element Structure
 -----------------
@@ -91,22 +97,46 @@ Then create a `webpack.config.js` file that looks like:
 
 At this point there's a lot of functionality present.
 
-    $ npx webpack
+    $ npx webpack --mode=development
 
 Will build a debug version of all the demo pages and all the app pages
-in `dist`.
+in `dist`. In the example Makefile, this is the default `make` command.
 
-    $ npx webpack-dev-server --watch
+    $ npx webpack-dev-server --mode=production --watch-poll
 
 Will do the same as build, but served by the webpack-dev-server, which
 will rebuild all source and reload the webpage any time you edit a file.
+In the example Makefile, this is command `make serve`.
 
-    $ npx webpack --watch
+    $ npx webpack --mode=development --watch-poll
 
 Will do the same as build, but will rebuild all the files in `dist`
-when you edit a file.
+when you edit a file. In the example Makefile, this is the command `make watch`.
 
-    $ NODE_ENV=production npx webpack
+    $ NODE_ENV=production npx webpack --mode=production
 
 Will build a release version of the pages in `dist`, no demo pages will be
-emitted.
+emitted. In the example Makefile, this is the command `make release`.
+
+
+Public Path
+-----------
+
+Sometimes, an app wants to specify that the js/css files are in an absolute path
+(e.g. `/js/`, `/static/`). Webpack supports this with [publicPath](https://webpack.js.org/guides/public-path/).
+Since Pulito just returns a Webpack object, the output of `commonBuilder` can be
+modified directly, like:
+
+    const { commonBuilder } = require('pulito');
+    module.exports = commonBuilder(__dirname);
+    module.exports.output.publicPath='/static/';
+
+After re-creating the files (e.g. `make release`), the js and css will be linked in like
+
+    <!-- In index.html -->
+    <link href="/static/index-bundle.css?025351514c76002d06e1" rel="stylesheet">
+    <script type="text/javascript" src="/static/index-bundle.js?b4a24109eb00b1ce7dc9"></script>
+
+
+Also note that when running the dev server `make serve`, **all** pages will be served out
+of that localhost:8080/[publicPath], for example, `localhost:8080/static/example-element.html`.
