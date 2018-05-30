@@ -92,8 +92,8 @@ The `webpack.config.js` for such a project can be very simple, just run:
 
 Then create a `webpack.config.js` file that looks like:
 
-    const { commonBuilder } = require('pulito');
-    module.exports = commonBuilder(__dirname);
+    const commonBuilder = require('pulito');
+    module.exports = (env, argv) => commonBuilder(env, argv, __dirname);
 
 At this point there's a lot of functionality present.
 
@@ -127,9 +127,12 @@ Sometimes, an app wants to specify that the js/css files are in an absolute path
 Since Pulito just returns a Webpack object, the output of `commonBuilder` can be
 modified directly, like:
 
-    const { commonBuilder } = require('pulito');
-    module.exports = commonBuilder(__dirname);
-    module.exports.output.publicPath='/static/';
+    const commonBuilder = require('pulito');
+    module.exports = (env, argv) => {
+      let config = commonBuilder(env, argv, __dirname);
+      config.output.publicPath='/static/';
+      return config;
+    }
 
 After re-creating the files (e.g. `make release`), the js and css will be linked in like
 
