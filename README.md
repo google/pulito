@@ -129,7 +129,7 @@ modified directly, like:
 
     const { commonBuilder } = require('pulito');
     module.exports = commonBuilder(__dirname);
-    module.exports.output.publicPath='/static/'
+    module.exports.output.publicPath='/static/';
 
 After re-creating the files (e.g. `make release`), the js and css will be linked in like
 
