@@ -21,26 +21,27 @@
 // Usage:
 //    A webpack.config.js can be as simple as:
 //
-//       const { commonBuilder } = require('pulito');
-//       module.exports = commonBuilder(__dirname);
+//       const commonBuilder = require('pulito');
+//       module.exports = (env, argv) => commonBuilder(env, argv, __dirname);
 //
 //    For an application you need to add the entry points and associate them
 //    with HTML files:
 //
-//        const { commonBuilder } = require('../res/mod/webpack.common.js');
+//        const commonBuilder = require('pulito');
 //        const HtmlWebpackPlugin = require('html-webpack-plugin');
 //
-//        let common = commonBuilder(__dirname);
-//        common.entry.index = './pages/index.js'
-//        common.plugins.push(
-//            new HtmlWebpackPlugin({
-//              filename: 'index.html',
-//              template: './pages/index.html',
-//              chunks: ['index'],
-//            })
-//        );
+//        module.exports = (env, argv) => {
+//          let common = commonBuilder(env, argv, __dirname);
+//          common.entry.index = './pages/index.js'
+//          common.plugins.push(
+//              new HtmlWebpackPlugin({
+//                filename: 'index.html',
+//                template: './pages/index.html',
+//                chunks: ['index'],
+//              })
+//          );
+//        }
 //
-//        module.exports = common
 //
 // You do not need to add any of the plugins or loaders used here to your
 // local package.json, on the other hand, if you add new loaders or plugins
@@ -48,7 +49,7 @@
 // package.json.
 //
 //     build:
-//      	npx webpack
+//      	npx webpack --mode=development
 //
 //     release:
 //      	npx webpack --mode=production
@@ -199,7 +200,11 @@ function pageFinder(dir, webpack_config) {
   return webpack_config
 }
 
-module.exports.commonBuilder = function(dirname) {
+module.exports = (env, argv, dirname) => {
+  // The postcss config file must be named postcss.config.js, so we store the
+  // different configs in different dirs.
+  let prefix = argv.mode === 'production' ? 'prod' : 'dev';
+  let postCssConfig = path.resolve(__dirname, prefix, 'postcss.config.js');
   let common = {
     entry: {
       // Users of webpack.common must fill in the entry point(s).
@@ -227,7 +232,7 @@ module.exports.commonBuilder = function(dirname) {
                 loader: 'postcss-loader',
                 options: {
                   config: {
-                    path: path.resolve(__dirname, 'postcss.config.js')
+                    path: postCssConfig,
                   },
                 },
               },
@@ -268,7 +273,7 @@ module.exports.commonBuilder = function(dirname) {
     ],
   };
   common = pageFinder(dirname, common);
-  if (process.env.NODE_ENV == 'production') {
+  if (argv.mode == 'production') {
     common.plugins.push(
       new MinifyPlugin({}, {
         comments: false,

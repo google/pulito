@@ -1,3 +1,4 @@
 node_modules
 dist
 example/package-lock.json
+package-lock.json
