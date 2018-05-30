@@ -91,22 +91,23 @@ Then create a `webpack.config.js` file that looks like:
 
 At this point there's a lot of functionality present.
 
-    $ npx webpack
+    $ npx webpack --mode=development
 
 Will build a debug version of all the demo pages and all the app pages
-in `dist`.
+in `dist`. In the example Makefile, this is the default `make` command.
 
-    $ npx webpack-dev-server --watch
+    $ npx webpack-dev-server --mode=production --watch-poll
 
 Will do the same as build, but served by the webpack-dev-server, which
 will rebuild all source and reload the webpage any time you edit a file.
+In the example Makefile, this is command `make serve`.
 
-    $ npx webpack --watch
+    $ npx webpack --mode=development --watch-poll
 
 Will do the same as build, but will rebuild all the files in `dist`
-when you edit a file.
+when you edit a file. In the example Makefile, this is the command `make watch`.
 
-    $ NODE_ENV=production npx webpack
+    $ NODE_ENV=production npx webpack --mode=production
 
 Will build a release version of the pages in `dist`, no demo pages will be
-emitted.
+emitted. In the example Makefile, this is the command `make release`.

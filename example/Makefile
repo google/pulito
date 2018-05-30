@@ -1,11 +1,14 @@
-build:
+default: package-lock.json
 	npx webpack --mode=development
 
-serve:
-	npx webpack-dev-server --watch
+release: package-lock.json
+	NODE_ENV='production' npx webpack --mode=production
 
-watch:
-	npx webpack --watch
+serve: package-lock.json
+	npx webpack-dev-server --mode=development --watch-poll
 
-release:
-	npx webpack --mode=production
+watch: package-lock.json
+	npx webpack --watch-poll --mode=development --watch-poll
+
+package-lock.json: package.json
+	npm install
