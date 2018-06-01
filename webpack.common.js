@@ -42,6 +42,8 @@
 //          );
 //        }
 //
+//    Note that argv.mode will be set to either 'production', 'development',
+//    or '' depending on the --mode flag passed to the webpack cli.
 //
 // You do not need to add any of the plugins or loaders used here to your
 // local package.json, on the other hand, if you add new loaders or plugins
@@ -273,7 +275,7 @@ module.exports = (env, argv, dirname) => {
     ],
   };
   common = pageFinder(dirname, common);
-  if (argv.mode == 'production') {
+  if (argv && argv.mode == 'production') {
     common.plugins.push(
       new MinifyPlugin({}, {
         comments: false,
