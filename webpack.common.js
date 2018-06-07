@@ -42,6 +42,8 @@
 //          );
 //        }
 //
+//    Note that argv.mode will be set to either 'production', 'development',
+//    or '' depending on the --mode flag passed to the webpack cli.
 //
 // You do not need to add any of the plugins or loaders used here to your
 // local package.json, on the other hand, if you add new loaders or plugins
@@ -49,10 +51,10 @@
 // package.json.
 //
 //     build:
-//        npx webpack --mode=development
+//      	npx webpack --mode=development
 //
 //     release:
-//        npx webpack --mode=production
+//      	npx webpack --mode=production
 //
 const { glob } = require('glob');
 const path = require('path');
