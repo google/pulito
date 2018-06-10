@@ -63,7 +63,19 @@ const { basename, join, resolve } = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
+
+const minifyOptions = {
+  caseSensitive: true,
+  collapseBooleanAttributes: true,
+  collapseWhitespace: true,
+  minifyCSS: true,
+  minifyJS: true,
+  minifyURLS: true,
+  removeOptionalTags: true,
+  removeRedundantAttributes: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+};
 
 
 /* A function that will look at all subdirectories of 'dir'/modules
@@ -166,7 +178,7 @@ function demoFinder(dir, webpack_config) {
  *      );
  *
  */
-function pageFinder(dir, webpack_config) {
+function pageFinder(dir, webpack_config, minifyOutput) {
   // Look at all sub-directories of dir and if a directory contains
   // both a -demo.html and -demo.js file then add the corresponding
   // entry points and Html plugins to the config.
@@ -190,12 +202,16 @@ function pageFinder(dir, webpack_config) {
     let baseHTML = basename(pageHTML);
     let name = basename(pageJS, '.js');
     webpack_config.entry[name] = pageJS;
+    let opts = {
+      filename: baseHTML,
+      template: pageHTML,
+      chunks: [name],
+    };
+    if (minifyOutput) {
+      opts.minify = minifyOptions;
+    }
     webpack_config.plugins.push(
-      new HtmlWebpackPlugin({
-        filename: baseHTML,
-        template: pageHTML,
-        chunks: [name],
-      }),
+      new HtmlWebpackPlugin(opts),
     );
   });
 
@@ -274,14 +290,8 @@ module.exports = (env, argv, dirname) => {
       // need to make sure they installed them in their project via npm.
     ],
   };
-  common = pageFinder(dirname, common);
-  if (argv && argv.mode == 'production') {
-    common.plugins.push(
-      new MinifyPlugin({}, {
-        comments: false,
-      })
-    )
-  } else {
+  common = pageFinder(dirname, common, argv.mode === 'production');
+  if (argv.mode !== 'production') {
     common = demoFinder(dirname, common);
   }
   return common;

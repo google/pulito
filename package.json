@@ -1,6 +1,6 @@
 {
   "name": "pulito",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Conventions and structure for a Vanilla JS application with a supporting webpack config.",
   "main": "webpack.common.js",
   "license": "Apache-2.0",
@@ -15,7 +15,6 @@
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
-    "babel-minify-webpack-plugin": "^0.3.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-minify": "^0.4.3",
     "clean-webpack-plugin": "^0.1.19",
