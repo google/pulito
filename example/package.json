@@ -6,9 +6,9 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "pulito": "^3",
-    "webpack": "^4.10.2",
-    "webpack-cli": "^2.1.4",
-    "webpack-dev-server": "^3.1.4"
+    "pulito": "^4",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
   }
 }
