@@ -1,4 +1,7 @@
-default: package-lock.json
+default:
+	rollup -c
+
+default2: package-lock.json
 	npx webpack --mode=development
 
 release: package-lock.json
