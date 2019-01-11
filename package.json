@@ -1,6 +1,6 @@
 {
   "name": "pulito",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "Conventions and structure for a Vanilla JS application with a supporting webpack config.",
   "main": "webpack.common.js",
   "license": "Apache-2.0",
@@ -13,6 +13,7 @@
     "url": "https://github.com/google/pulito.git"
   },
   "dependencies": {
+    "autoprefixer": "^9.4.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
