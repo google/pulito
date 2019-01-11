@@ -51,10 +51,10 @@
 // package.json.
 //
 //     build:
-//      	npx webpack --mode=development
+//        npx webpack --mode=development
 //
 //     release:
-//      	npx webpack --mode=production
+//        npx webpack --mode=production
 //
 const { glob } = require('glob');
 const path = require('path');
@@ -68,6 +68,8 @@ const minifyOptions = {
   caseSensitive: true,
   collapseBooleanAttributes: true,
   collapseWhitespace: true,
+  // this handles CSS minification in the .js files. For options
+  // involving minifying .[s]css files, see ./**/postcss.config.js
   minifyCSS: true,
   minifyJS: true,
   minifyURLS: true,
@@ -222,6 +224,8 @@ module.exports = (env, argv, dirname) => {
   // The postcss config file must be named postcss.config.js, so we store the
   // different configs in different dirs.
   let prefix = argv.mode === 'production' ? 'prod' : 'dev';
+  // This file handles minification, auto-prefixing, etc. See there for configuring
+  // those plugins.
   let postCssConfig = path.resolve(__dirname, prefix, 'postcss.config.js');
   let common = {
     entry: {
