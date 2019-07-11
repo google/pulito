@@ -1,5 +1,8 @@
+login:
+	npm login --registry https://wombat-dressing-room.appspot.com/pulito/_ns
+
 publish:
-	npm publish
+	npm publish --registry https://wombat-dressing-room.appspot.com/pulito/_ns
 
 update-major:
 	npm version major
