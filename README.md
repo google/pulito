@@ -45,6 +45,16 @@ to get you going.
 
 You will be prompted to overwrite `package.json`, select 'yes'.
 
+Now you will need to run `npm install` since the `package.json` was updated.
+
+    $ npm install
+
+You will also need to edit `package.json` to reflect the name of your project,
+etc. since we just overwrote it, but you can leave that for later if you are
+just experimenting with pulito.
+
+Now run:
+
     $ make serve
 
 At this point you should be able to visit the running skeleton
