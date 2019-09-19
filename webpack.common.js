@@ -61,7 +61,7 @@ const path = require('path');
 const fs = require('fs')
 const { basename, join, resolve } = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const minifyOptions = {
@@ -242,30 +242,32 @@ module.exports = (env, argv, dirname) => {
       rules: [
         {
           test: /\.[s]?css$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  importLoaders: 2, // postcss-loader and sass-loader.
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {},
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 2, // postcss-loader and sass-loader.
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                config: {
+                  path: postCssConfig,
                 },
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  config: {
-                    path: postCssConfig,
-                  },
-                },
-              },
-              {
-                loader: 'sass-loader', // Since SCSS is a superset of CSS we can always apply this loader.
-                options: {
-                  includePaths: [__dirname],
-                }
+            },
+            {
+              loader: 'sass-loader', // Since SCSS is a superset of CSS we can always apply this loader.
+              options: {
+                includePaths: [__dirname],
               }
-            ],
-          })
+            }
+          ],
         },
         {
           test: /\.html$/,
@@ -281,7 +283,7 @@ module.exports = (env, argv, dirname) => {
       ]
     },
     plugins: [
-      new ExtractTextPlugin({
+      new MiniCssExtractPlugin({
         filename: '[name]-bundle.css?[hash]',
       }),
       new CleanWebpackPlugin(
